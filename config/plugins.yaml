@@ -302,14 +302,27 @@
     let g:neosnippet#expand_word_boundary = 1
     autocmd MyAutoCmd InsertLeave * NeoSnippetClearMarkers
 
+- repo: airblade/vim-rooter
+  if: empty($VIM_MINIMAL)
+  hook_add: |
+    let g:rooter_manual_only = 0
+    let g:rooter_patterns = ['fabfile.yaml', '.git/']
+
 - repo: ludovicchabant/vim-gutentags
   if: executable('ctags') && empty($VIM_MINIMAL)
   on_path: .*
   hook_add: |
     let g:gutentags_cache_dir = $VARPATH.'/tags'
     let g:gutentags_generate_on_write = 1
-    let g:gutentags_generate_on_missing = 0
-    let g:gutentags_generate_on_new = 0
+    let g:gutentags_generate_on_missing = 1
+    let g:gutentags_generate_on_new = 1
+    let g:gutentags_exclude = ['*.css', '*.html', '*.js', '*.json', '*.xml',
+                            \ '*.phar', '*.ini', '*.rst', '*.md',
+                            \ '*vendor/*/test*', '*vendor/*/Test*',
+                            \ '*vendor/*/fixture*', '*vendor/*/Fixture*',
+                            \ '*var/cache*', '*var/log*']
+  hook_post_source: |
+    let g:gutentags_project_root_finder = FindRootDirectory()
 
 - repo: mattn/emmet-vim
   if: empty($VIM_MINIMAL)
