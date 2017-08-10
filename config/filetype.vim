@@ -135,4 +135,5 @@ let g:perl_fold = 1
 " }}}
 " }}}
 
+autocmd BufNewFile,BufRead *.theme|*.inc   set syntax=php
 " vim: set foldmethod=marker ts=2 sw=2 tw=80 noet :
